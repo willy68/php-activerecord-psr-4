@@ -4,6 +4,7 @@
 *.log
 *.db
 *.swp
+.phpunit*
 vendor/*
 composer.lock
 phpunit.xml
