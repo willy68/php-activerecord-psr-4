@@ -25,47 +25,47 @@ class UtilsTest extends SnakeCase_PHPUnit_Framework_TestCase
 
 	public function test_collect_with_array_of_objects_using_closure()
 	{
-		$this->assert_equals(array("0a", "1a"), AR\collect($this->object_array, function ($obj) {
+		$this->assertEquals(array("0a", "1a"), AR\collect($this->object_array, function ($obj) {
 			return $obj->a;
 		}));
 	}
 
 	public function test_collect_with_array_of_objects_using_string()
 	{
-		$this->assert_equals(array("0a", "1a"), AR\collect($this->object_array, "a"));
+		$this->assertEquals(array("0a", "1a"), AR\collect($this->object_array, "a"));
 	}
 
 	public function test_collect_with_array_hash_using_closure()
 	{
-		$this->assert_equals(array("0a", "1a"), AR\collect($this->array_hash, function ($item) {
+		$this->assertEquals(array("0a", "1a"), AR\collect($this->array_hash, function ($item) {
 			return $item["a"];
 		}));
 	}
 
 	public function test_collect_with_array_hash_using_string()
 	{
-		$this->assert_equals(array("0a", "1a"), AR\collect($this->array_hash, "a"));
+		$this->assertEquals(array("0a", "1a"), AR\collect($this->array_hash, "a"));
 	}
 
 	public function test_array_flatten()
 	{
-		$this->assert_equals(array(), AR\array_flatten(array()));
-		$this->assert_equals(array(1), AR\array_flatten(array(1)));
-		$this->assert_equals(array(1), AR\array_flatten(array(array(1))));
-		$this->assert_equals(array(1, 2), AR\array_flatten(array(array(1, 2))));
-		$this->assert_equals(array(1, 2), AR\array_flatten(array(array(1), 2)));
-		$this->assert_equals(array(1, 2), AR\array_flatten(array(1, array(2))));
-		$this->assert_equals(array(1, 2, 3), AR\array_flatten(array(1, array(2), 3)));
-		$this->assert_equals(array(1, 2, 3, 4), AR\array_flatten(array(1, array(2, 3), 4)));
-		$this->assert_equals(array(1, 2, 3, 4, 5, 6), AR\array_flatten(array(1, array(2, 3), 4, array(5, 6))));
+		$this->assertEquals(array(), AR\array_flatten(array()));
+		$this->assertEquals(array(1), AR\array_flatten(array(1)));
+		$this->assertEquals(array(1), AR\array_flatten(array(array(1))));
+		$this->assertEquals(array(1, 2), AR\array_flatten(array(array(1, 2))));
+		$this->assertEquals(array(1, 2), AR\array_flatten(array(array(1), 2)));
+		$this->assertEquals(array(1, 2), AR\array_flatten(array(1, array(2))));
+		$this->assertEquals(array(1, 2, 3), AR\array_flatten(array(1, array(2), 3)));
+		$this->assertEquals(array(1, 2, 3, 4), AR\array_flatten(array(1, array(2, 3), 4)));
+		$this->assertEquals(array(1, 2, 3, 4, 5, 6), AR\array_flatten(array(1, array(2, 3), 4, array(5, 6))));
 	}
 
 	public function test_all()
 	{
-		$this->assert_true(AR\all(null, array(null, null)));
-		$this->assert_true(AR\all(1, array(1, 1)));
-		$this->assert_false(AR\all(1, array(1, '1')));
-		$this->assert_false(AR\all(null, array('', null)));
+		$this->assertTrue(AR\all(null, array(null, null)));
+		$this->assertTrue(AR\all(1, array(1, 1)));
+		$this->assertFalse(AR\all(1, array(1, '1')));
+		$this->assertFalse(AR\all(null, array('', null)));
 	}
 
 	public function test_classify()
@@ -77,7 +77,7 @@ class UtilsTest extends SnakeCase_PHPUnit_Framework_TestCase
 		foreach ($bad_class_names as $s)
 			$class_names[] = AR\classify($s);
 
-		$this->assert_equals($class_names, $good_class_names);
+		$this->assertEquals($class_names, $good_class_names);
 	}
 
 	public function test_classify_singularize()
@@ -89,26 +89,26 @@ class UtilsTest extends SnakeCase_PHPUnit_Framework_TestCase
 		foreach ($bad_class_names as $s)
 			$class_names[] = AR\classify($s, true);
 
-		$this->assert_equals($class_names, $good_class_names);
+		$this->assertEquals($class_names, $good_class_names);
 	}
 
 	public function test_singularize()
 	{
-		$this->assert_equals('order_status', AR\Utils::singularize('order_status'));
-		$this->assert_equals('order_status', AR\Utils::singularize('order_statuses'));
-		$this->assert_equals('os_type', AR\Utils::singularize('os_type'));
-		$this->assert_equals('os_type', AR\Utils::singularize('os_types'));
-		$this->assert_equals('photo', AR\Utils::singularize('photos'));
-		$this->assert_equals('pass', AR\Utils::singularize('pass'));
-		$this->assert_equals('pass', AR\Utils::singularize('passes'));
+		$this->assertEquals('order_status', AR\Utils::singularize('order_status'));
+		$this->assertEquals('order_status', AR\Utils::singularize('order_statuses'));
+		$this->assertEquals('os_type', AR\Utils::singularize('os_type'));
+		$this->assertEquals('os_type', AR\Utils::singularize('os_types'));
+		$this->assertEquals('photo', AR\Utils::singularize('photos'));
+		$this->assertEquals('pass', AR\Utils::singularize('pass'));
+		$this->assertEquals('pass', AR\Utils::singularize('passes'));
 	}
 
 	public function test_wrap_strings_in_arrays()
 	{
 		$x = array('1', array('2'));
-		$this->assert_equals(array(array('1'), array('2')), \ActiveRecord\wrap_strings_in_arrays($x));
+		$this->assertEquals(array(array('1'), array('2')), \ActiveRecord\wrap_strings_in_arrays($x));
 
 		$x = '1';
-		$this->assert_equals(array(array('1')), \ActiveRecord\wrap_strings_in_arrays($x));
+		$this->assertEquals(array(array('1')), \ActiveRecord\wrap_strings_in_arrays($x));
 	}
 }

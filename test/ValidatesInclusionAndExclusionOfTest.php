@@ -32,7 +32,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = 'blah';
 		$book->save();
-		$this->assert_false($book->errors->is_invalid('name'));
+		$this->assertFalse($book->errors->is_invalid('name'));
 	}
 
 	public function test_exclusion()
@@ -40,7 +40,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookExclusion;
 		$book->name = 'blahh';
 		$book->save();
-		$this->assert_false($book->errors->is_invalid('name'));
+		$this->assertFalse($book->errors->is_invalid('name'));
 	}
 
 	public function test_invalid_inclusion()
@@ -48,10 +48,10 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = 'thanker';
 		$book->save();
-		$this->assert_true($book->errors->is_invalid('name'));
+		$this->assertTrue($book->errors->is_invalid('name'));
 		$book->name = 'alpha ';
 		$book->save();
-		$this->assert_true($book->errors->is_invalid('name'));
+		$this->assertTrue($book->errors->is_invalid('name'));
 	}
 
 	public function test_invalid_exclusion()
@@ -59,12 +59,12 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookExclusion;
 		$book->name = 'alpha';
 		$book->save();
-		$this->assert_true($book->errors->is_invalid('name'));
+		$this->assertTrue($book->errors->is_invalid('name'));
 
 		$book = new BookExclusion;
 		$book->name = 'bravo';
 		$book->save();
-		$this->assert_true($book->errors->is_invalid('name'));
+		$this->assertTrue($book->errors->is_invalid('name'));
 	}
 
 	public function test_inclusion_with_numeric()
@@ -73,7 +73,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = 2;
 		$book->save();
-		$this->assert_false($book->errors->is_invalid('name'));
+		$this->assertFalse($book->errors->is_invalid('name'));
 	}
 
 	public function test_inclusion_with_boolean()
@@ -82,7 +82,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = true;
 		$book->save();
-		$this->assert_false($book->errors->is_invalid('name'));
+		$this->assertFalse($book->errors->is_invalid('name'));
 	}
 
 	public function test_inclusion_with_null()
@@ -91,7 +91,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = null;
 		$book->save();
-		$this->assert_false($book->errors->is_invalid('name'));
+		$this->assertFalse($book->errors->is_invalid('name'));
 	}
 
 	public function test_invalid_inclusion_with_numeric()
@@ -100,7 +100,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = 5;
 		$book->save();
-		$this->assert_true($book->errors->is_invalid('name'));
+		$this->assertTrue($book->errors->is_invalid('name'));
 	}
 
 	public function tes_inclusion_within_option()
@@ -109,7 +109,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = 'okay';
 		$book->save();
-		$this->assert_false($book->errors->is_invalid('name'));
+		$this->assertFalse($book->errors->is_invalid('name'));
 	}
 
 	public function tes_inclusion_scalar_value()
@@ -118,7 +118,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = 'okay';
 		$book->save();
-		$this->assert_false($book->errors->is_invalid('name'));
+		$this->assertFalse($book->errors->is_invalid('name'));
 	}
 
 	public function test_valid_null()
@@ -127,7 +127,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = null;
 		$book->save();
-		$this->assert_false($book->errors->is_invalid('name'));
+		$this->assertFalse($book->errors->is_invalid('name'));
 	}
 
 	public function test_valid_blank()
@@ -136,7 +136,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = '';
 		$book->save();
-		$this->assert_false($book->errors->is_invalid('name'));
+		$this->assertFalse($book->errors->is_invalid('name'));
 	}
 
 	public function test_custom_message()
@@ -148,12 +148,11 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book = new BookInclusion;
 		$book->name = 'not included';
 		$book->save();
-		$this->assert_equals('is using a custom message.', $book->errors->on('name'));
+		$this->assertEquals('is using a custom message.', $book->errors->on('name'));
 		$book = new BookExclusion;
 		$book->name = 'bravo';
 		$book->save();
-		$this->assert_equals('is using a custom message.', $book->errors->on('name'));
+		$this->assertEquals('is using a custom message.', $book->errors->on('name'));
 	}
 
-};
-?>
+}
