@@ -45,7 +45,7 @@ class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_set_connections_must_be_array()
 	{
-		$this->expectedException(ConfigException::class);
+		$this->expectException(ConfigException::class);
 		$this->config->set_connections(null);
 	}
 
@@ -104,7 +104,7 @@ class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_set_date_class_when_class_doesnt_exist()
 	{
-		$this->expectedException(ConfigException::class);
+		$this->expectException(ConfigException::class);
 		$this->config->set_date_class('doesntexist');
 	}
 
@@ -112,7 +112,7 @@ class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_set_date_class_when_class_doesnt_have_format_or_createfromformat()
 	{
-		$this->expectedException(ConfigException::class);
+		$this->expectException(ConfigException::class);
 		$this->config->set_date_class('TestLogger');
 	}
 
@@ -120,7 +120,7 @@ class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_set_date_class_when_class_doesnt_have_createfromformat()
 	{
-		$this->expectedException(ConfigException::class);
+		$this->expectException(ConfigException::class);
 		$this->config->set_date_class('TestDateTimeWithoutCreateFromFormat');
 	}
 

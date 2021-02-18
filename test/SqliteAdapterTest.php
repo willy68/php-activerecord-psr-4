@@ -82,12 +82,10 @@ class SqliteAdapterTest extends AdapterTest
 	// not supported
 	public function test_connect_with_port()
 	{
-		return true;
 	}
 
 	// not supported
 	public function test_columns_sequence()
 	{
-		return true;
 	}
 }

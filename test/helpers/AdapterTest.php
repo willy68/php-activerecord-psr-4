@@ -199,8 +199,8 @@ class AdapterTest extends DatabaseTest
 	 */
 	public function test_invalid_query()
 	{
-		$this->conn->query('alsdkjfsdf');
 		$this->expectException(DatabaseException::class);
+		$this->conn->query('alsdkjfsdf');
 	}
 
 	public function test_fetch()
@@ -350,7 +350,7 @@ class AdapterTest extends DatabaseTest
 
 	public function test_query_table_info()
 	{
-		$$this->assertGreaterThan(0, count((array) $this->conn->query_for_tables()));
+		$this->assertGreaterThan(0, count((array) $this->conn->query_for_tables()));
 	}
 
 	public function test_query_table_info_must_return_one_field()
