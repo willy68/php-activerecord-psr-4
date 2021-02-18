@@ -33,12 +33,11 @@ class ActiveRecordTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ActiveRecordException
 	 */
 	public function test_options_hash_with_unknown_keys()
 	{
-		$this->assertFalse(Author::is_options_hash(array('conditions' => 'blah', 'sharks' => 'laserz', 'dubya' => 'bush')));
 		$this->expectException(ActiveRecordException::class);
+		$this->assertFalse(Author::is_options_hash(array('conditions' => 'blah', 'sharks' => 'laserz', 'dubya' => 'bush')));
 	}
 
 	public function test_options_is_hash()
@@ -80,13 +79,12 @@ class ActiveRecordTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\UndefinedPropertyException
 	 */
 	public function test_invalid_attribute()
 	{
+		$this->expectException(UndefinedPropertyException::class);
 		$author = Author::find('first', array('conditions' => 'author_id=1'));
 		$author->some_invalid_field_name;
-		$this->expectException(UndefinedPropertyException::class);
 	}
 
 	public function test_invalid_attributes()
@@ -489,12 +487,11 @@ class ActiveRecordTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ActiveRecordException
 	 */
 	public function test_undefined_instance_method()
 	{
-		Author::first()->find_by_name('sdf');
 		$this->expectException(ActiveRecordException::class);
+		Author::first()->find_by_name('sdf');
 	}
 
 	public function test_clear_cache_for_specific_class()

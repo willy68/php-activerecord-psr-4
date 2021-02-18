@@ -39,10 +39,10 @@ class SQLBuilderTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ActiveRecordException
 	 */
 	public function test_no_connection()
 	{
+		$this->expectException(ActiveRecordException::class);
 		new SQLBuilder(null, 'authors');
 	}
 
@@ -139,12 +139,11 @@ class SQLBuilderTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ActiveRecordException
 	 */
 	public function test_insert_requires_hash()
 	{
-		$this->sql->insert(array(1));
 		$this->expectException(ActiveRecordException::class);
+		$this->sql->insert(array(1));
 	}
 
 	public function test_insert()

@@ -59,9 +59,9 @@ class ExpressionsTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_insufficient_variables()
 	{
+		$$this->expectedException(ExpressionsException::class);
 		$c = new Expressions(null, 'name=? and id=?', 'Tito');
 		$c->to_s();
-		$$this->expectedException(ExpressionsException::class);
 	}
 
 	public function test_no_values()
@@ -172,8 +172,8 @@ class ExpressionsTest extends SnakeCase_PHPUnit_Framework_TestCase
 	public function test_bind_invalid_parameter_number()
 	{
 		$a = new Expressions(null, 'name=?');
+		$this->expectedException(ExpressionsException::class);
 		$a->bind(0, 99);
-		$$this->expectedException(ExpressionsException::class);
 	}
 
 	public function test_subsitute_using_alternate_values()

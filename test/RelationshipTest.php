@@ -2,6 +2,7 @@
 
 namespace Test;
 
+use ActiveRecord\Exceptions\HasManyThroughAssociationException;
 use Test\models\Book;
 use Test\models\Host;
 use Test\models\Event;
@@ -18,6 +19,7 @@ use ActiveRecord\Exceptions\ReadOnlyException;
 use ActiveRecord\Exceptions\RecordNotFound;
 use ActiveRecord\Exceptions\RelationshipException;
 use ActiveRecord\Exceptions\UndefinedPropertyException;
+use ReflectionException;
 
 class NotModel
 {
@@ -128,12 +130,11 @@ class RelationshipTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\RelationshipException
 	 */
 	public function test_joins_on_model_via_undeclared_association()
 	{
-		$x = JoinBook::first(array('joins' => array('undeclared')));
 		$this->expectException(RelationshipException::class);
+		$x = JoinBook::first(array('joins' => array('undeclared')));
 	}
 
 	public function test_joins_only_loads_given_model_attributes()
@@ -380,13 +381,13 @@ class RelationshipTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\HasManyThroughAssociationException
 	 */
 	public function test_has_many_through_no_association()
 	{
 		Event::$belongs_to = array(array('host'));
 		Venue::$has_many[1] = array('hosts', 'through' => 'blahhhhhhh');
 
+		$this->expectException(HasManyThroughAssociationException::class);
 		$venue = $this->get_relationship();
 		$n = $venue->hosts;
 		$this->assertTrue(count($n) > 0);
@@ -422,7 +423,6 @@ class RelationshipTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ReflectionException
 	 */
 	public function test_has_many_through_with_invalid_class_name()
 	{
@@ -430,6 +430,7 @@ class RelationshipTest extends DatabaseTest
 		Venue::$has_one = array(array('invalid_assoc'));
 		Venue::$has_many[1] = array('hosts', 'through' => 'invalid_assoc');
 
+		$this->expectException(ReflectionException::class);
 		$this->get_relationship()->hosts;
 	}
 
@@ -558,10 +559,10 @@ class RelationshipTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\RelationshipException
 	 */
 	public function test_throw_error_if_relationship_is_not_a_model()
 	{
+		$this->expectException(RelationshipException::class);
 		AuthorWithNonModelRelationship::first()->books;
 	}
 
@@ -759,11 +760,10 @@ class RelationshipTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\RecordNotFound
 	 */
 	public function test_dont_attempt_eager_load_when_record_does_not_exist()
 	{
-		Author::find(999999, array('include' => array('books')));
 		$this->expectException(RecordNotFound::class);
+		Author::find(999999, array('include' => array('books')));
 	}
 }

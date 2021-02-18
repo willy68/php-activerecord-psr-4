@@ -73,26 +73,24 @@ class ValidatesFormatOfTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ValidationsArgumentError
 	 */
 	public function test_invalid_lack_of_with_key()
 	{
 		$book = new BookFormat;
+		$this->expectException(ValidationsArgumentError::class);
 		$book->name = null;
 		$book->save();
-		$this->expectException(ValidationsArgumentError::class);
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ValidationsArgumentError
 	 */
 	public function test_invalid_with_expression_as_non_string()
 	{
 		BookFormat::$validates_format_of[0]['with'] = array('test');
 		$book = new BookFormat;
+		$this->expectException(ValidationsArgumentError::class);
 		$book->name = null;
 		$book->save();
-		$this->expectException(ValidationsArgumentError::class);
 	}
 
 	public function test_invalid_with_expression_as_non_regexp()

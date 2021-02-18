@@ -43,46 +43,46 @@ class AdapterTest extends DatabaseTest
 	 */
 	public function test_invalid_connection_protocol()
 	{
-		\ActiveRecord\Connection::instance('terribledb://user:pass@host/db');
 		$this->expectException(DatabaseException::class);
+		\ActiveRecord\Connection::instance('terribledb://user:pass@host/db');
 	}
 
 	/**
 	 */
 	public function test_no_host_connection()
 	{
+		$this->expectException(DatabaseException::class);
 		if (!$GLOBALS['slow_tests'])
 			throw new DatabaseException("");
 
 		\ActiveRecord\Connection::instance("{$this->conn->protocol}://user:pass");
-		$this->expectException(DatabaseException::class);
 	}
 
 	/**
 	 */
 	public function test_connection_failed_invalid_host()
 	{
+		$this->expectException(DatabaseException::class);
 		if (!$GLOBALS['slow_tests'])
 			throw new DatabaseException("");
 
 		\ActiveRecord\Connection::instance("{$this->conn->protocol}://user:pass/1.1.1.1/db");
-		$this->expectException(DatabaseException::class);
 	}
 
 	/**
 	 */
 	public function test_connection_failed()
 	{
-		\ActiveRecord\Connection::instance("{$this->conn->protocol}://baduser:badpass@127.0.0.1/db");
 		$this->expectException(DatabaseException::class);
+		\ActiveRecord\Connection::instance("{$this->conn->protocol}://baduser:badpass@127.0.0.1/db");
 	}
 
 	/**
 	 */
 	public function test_connect_failed()
 	{
-		\ActiveRecord\Connection::instance("{$this->conn->protocol}://zzz:zzz@127.0.0.1/test");
 		$this->expectException(DatabaseException::class);
+		\ActiveRecord\Connection::instance("{$this->conn->protocol}://zzz:zzz@127.0.0.1/test");
 	}
 
 	public function test_connect_with_port()
@@ -107,8 +107,8 @@ class AdapterTest extends DatabaseTest
 	 */
 	public function test_connect_to_invalid_database()
 	{
-		\ActiveRecord\Connection::instance("{$this->conn->protocol}://test:test@127.0.0.1/" . self::InvalidDb);
 		$this->expectException(DatabaseException::class);
+		\ActiveRecord\Connection::instance("{$this->conn->protocol}://test:test@127.0.0.1/" . self::InvalidDb);
 	}
 
 	public function test_date_time_type()

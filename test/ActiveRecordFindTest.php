@@ -20,8 +20,8 @@ class ActiveRecordFindTest extends DatabaseTest
 	 */
 	public function test_find_with_no_params()
 	{
-		Author::find();
 		$this->expectException(RecordNotFound::class);
+		Author::find();
 	}
 
 	public function test_find_by_pk()
@@ -35,8 +35,8 @@ class ActiveRecordFindTest extends DatabaseTest
 	 */
 	public function test_find_by_pkno_results()
 	{
-		Author::find(99999999);
 		$this->expectException(RecordNotFound::class);
+		Author::find(99999999);
 	}
 
 	public function test_find_by_multiple_pk_with_partial_match()
@@ -76,8 +76,8 @@ class ActiveRecordFindTest extends DatabaseTest
 	 */
 	public function test_find_nothing_with_sql_in_string()
 	{
-		Author::first('name = 123123123');
 		$this->expectException(RecordNotFound::class);
+		Author::first('name = 123123123');
 	}
 
 	public function test_find_all()
@@ -93,13 +93,12 @@ class ActiveRecordFindTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\DatabaseException
 	 */
 	public function test_find_all_with_empty_array_bind_value_throws_exception()
 	{
+		$this->expectException(DatabaseException::class);
 		$authors = Author::find('all', array('conditions' => array('author_id IN(?)', array())));
 		$this->assertCount(0, $authors);
-		$this->expectException(DatabaseException::class);
 	}
 
 	public function test_find_hash_using_alias()
@@ -277,12 +276,11 @@ class ActiveRecordFindTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\DatabaseException
 	 */
 	public function test_find_by_call_static_invalid_column_name()
 	{
-		Author::find_by_sharks();
 		$this->expectException(DatabaseException::class);
+		Author::find_by_sharks();
 	}
 
 	public function test_find_all_by_call_static()
@@ -310,28 +308,26 @@ class ActiveRecordFindTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ActiveRecordException
 	 */
 	public function test_find_all_by_call_static_undefined_method()
 	{
-		Author::find_sharks('Tito');
 		$this->expectException(ActiveRecordException::class);
+		Author::find_sharks('Tito');
 	}
 
 	public function test_find_all_takes_limit_options()
 	{
+		$this->expectException(ActiveRecordException::class);
 		$authors = Author::all(array('limit' => 1, 'offset' => 2, 'order' => 'name desc'));
 		$this->assertEquals('George W. Bush', $authors[0]->name);
-		$this->expectException(ActiveRecordException::class);
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ActiveRecordException
 	 */
 	public function test_find_by_call_static_with_invalid_field_name()
 	{
-		Author::find_by_some_invalid_field_name('Tito');
 		$this->expectException(ActiveRecordException::class);
+		Author::find_by_some_invalid_field_name('Tito');
 	}
 
 	public function test_find_with_select()
@@ -416,12 +412,11 @@ class ActiveRecordFindTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\DatabaseException
 	 */
 	public function test_from_with_invalid_table()
 	{
-		$author = Author::find('first', array('from' => 'wrong_authors_table'));
 		$this->expectException(DatabaseException::class);
+		$author = Author::find('first', array('from' => 'wrong_authors_table'));
 	}
 
 	public function test_find_with_hash()
@@ -445,30 +440,27 @@ class ActiveRecordFindTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ActiveRecordException
 	 */
 	public function test_find_or_create_by_throws_exception_when_using_or()
 	{
-		Author::find_or_create_by_name_or_encrypted_password('New Guy', 'pencil');
 		$this->expectException(ActiveRecordException::class);
+		Author::find_or_create_by_name_or_encrypted_password('New Guy', 'pencil');
 	}
 
 	/**
-	 * @expectedException ActiveRecord\RecordNotFound
 	 */
 	public function test_find_by_zero()
 	{
-		Author::find(0);
 		$this->expectException(RecordNotFound::class);
+		Author::find(0);
 	}
 
 	/**
-	 * @expectedException ActiveRecord\RecordNotFound
 	 */
 	public function test_find_by_null()
 	{
-		Author::find(null);
 		$this->expectException(RecordNotFound::class);
+		Author::find(null);
 	}
 
 	public function test_count_by()

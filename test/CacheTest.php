@@ -93,8 +93,8 @@ class CacheTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_exception_when_connect_fails()
 	{
-		Cache::initialize('memcache://127.0.0.1:1234');
 		$this->expectException(CacheException::class);
 		$this->expectExceptionMessage("Connection refused");
+		Cache::initialize('memcache://127.0.0.1:1234');
 	}
 }

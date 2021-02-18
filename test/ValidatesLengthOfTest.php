@@ -293,26 +293,25 @@ class ValidatesLengthOfTest extends DatabaseTest
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ValidationsArgumentError
 	 */
 	public function test_with_option_as_non_numeric()
 	{
 		BookLength::$validates_length_of[0]['with'] = array('test');
 
 		$book = new BookLength;
+		$this->expectException(ValidationsArgumentError::class);
 		$book->name = null;
 		$book->save();
-		$this->expectException(ValidationsArgumentError::class);
 	}
 
 	/**
-	 * @expectedException ActiveRecord\ValidationsArgumentError
 	 */
 	public function test_with_option_as_non_numeric_non_array()
 	{
 		BookLength::$validates_length_of[0]['with'] = 'test';
 
 		$book = new BookLength;
+		$this->expectException(ValidationsArgumentError::class);
 		$book->name = null;
 		$book->save();
 	}

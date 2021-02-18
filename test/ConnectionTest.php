@@ -15,8 +15,8 @@ class ConnectionTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_connection_info_from_should_throw_exception_when_no_host()
 	{
-		\ActiveRecord\Connection::parse_connection_url('mysql://user:pass@');
 		$this->expectedException(DatabaseException::class);
+		\ActiveRecord\Connection::parse_connection_url('mysql://user:pass@');
 	}
 
 	public function test_connection_info()
@@ -41,8 +41,8 @@ class ConnectionTest extends SnakeCase_PHPUnit_Framework_TestCase
 	 */
 	public function test_gh_103_sqlite_connection_string_absolute()
 	{
-		$info = \ActiveRecord\Connection::parse_connection_url('sqlite:///some/path/to/file.db');
 		$this->expectedException(DatabaseException::class);
+		$info = \ActiveRecord\Connection::parse_connection_url('sqlite:///some/path/to/file.db');
 	}
 
 	public function test_gh_103_sqlite_connection_string_unix()
