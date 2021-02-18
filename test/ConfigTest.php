@@ -135,7 +135,7 @@ class ConfigTest extends SnakeCase_PHPUnit_Framework_TestCase
 		$test = $this;
 
 		Config::initialize(function ($cfg) use ($test) {
-			$test->assert_not_null($cfg);
+			$test->assertNotNull($cfg);
 			$test->assertEquals('ActiveRecord\Config', get_class($cfg));
 		});
 	}
