@@ -1,8 +1,10 @@
 <?php
 
+namespace Test;
+
 use Test\helpers\DatabaseTest;
 
-class BookPresence extends ActiveRecord\Model
+class BookPresence extends \ActiveRecord\Model
 {
 	static $table_name = 'books';
 
@@ -11,7 +13,7 @@ class BookPresence extends ActiveRecord\Model
 	);
 }
 
-class AuthorPresence extends ActiveRecord\Model
+class AuthorPresence extends \ActiveRecord\Model
 {
 	static $table_name = 'authors';
 
@@ -39,7 +41,7 @@ class ValidatesPresenceOfTest extends DatabaseTest
 		$author = new AuthorPresence();
 		$this->assertFalse($author->is_valid());
 	}
-	
+
 	public function test_invalid_null()
 	{
 		$book = new BookPresence(array('name' => null));

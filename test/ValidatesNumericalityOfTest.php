@@ -1,8 +1,10 @@
 <?php
 
+namespace Test;
+
 use Test\helpers\DatabaseTest;
 
-class BookNumericality extends ActiveRecord\Model
+class BookNumericality extends \ActiveRecord\Model
 {
 	static $table_name = 'books';
 
@@ -15,13 +17,13 @@ class ValidatesNumericalityOfTest extends DatabaseTest
 {
 	static $NULL = array(null);
 	static $BLANK = array("", " ", " \t \r \n");
-	static $FLOAT_STRINGS = array('0.0','+0.0','-0.0','10.0','10.5','-10.5','-0.0001','-090.1');
+	static $FLOAT_STRINGS = array('0.0', '+0.0', '-0.0', '10.0', '10.5', '-10.5', '-0.0001', '-090.1');
 	static $INTEGER_STRINGS = array('0', '+0', '-0', '10', '+10', '-10', '0090', '-090');
 	static $FLOATS = array(0.0, 10.0, 10.5, -10.5, -0.0001);
 	static $INTEGERS = array(0, 10, -10);
 	static $JUNK = array("not a number", "42 not a number", "00-1", "--3", "+-3", "+3-1", "-+019.0", "12.12.13.12", "123\nnot a number");
 
-	public function set_up($connection_name=null)
+	public function set_up($connection_name = null)
 	{
 		parent::set_up($connection_name);
 		BookNumericality::$validates_numericality_of = array(
@@ -29,18 +31,15 @@ class ValidatesNumericalityOfTest extends DatabaseTest
 		);
 	}
 
-	private function assert_validity($value, $boolean, $msg=null)
+	private function assert_validity($value, $boolean, $msg = null)
 	{
 		$book = new BookNumericality;
 		$book->numeric_test = $value;
 
-		if ($boolean == 'valid')
-		{
+		if ($boolean == 'valid') {
 			$this->assertTrue($book->save());
 			$this->assertFalse($book->errors->is_invalid('numeric_test'));
-		}
-		else
-		{
+		} else {
 			$this->assertFalse($book->save());
 			$this->assertTrue($book->errors->is_invalid('numeric_test'));
 
@@ -49,13 +48,13 @@ class ValidatesNumericalityOfTest extends DatabaseTest
 		}
 	}
 
-	private function assert_invalid($values, $msg=null)
+	private function assert_invalid($values, $msg = null)
 	{
 		foreach ($values as $value)
 			$this->assert_validity($value, 'invalid', $msg);
 	}
 
-	private function assert_valid($values, $msg=null)
+	private function assert_valid($values, $msg = null)
 	{
 		foreach ($values as $value)
 			$this->assert_validity($value, 'valid', $msg);
@@ -108,7 +107,7 @@ class ValidatesNumericalityOfTest extends DatabaseTest
 		BookNumericality::$validates_numericality_of[0]['only_integer'] = true;
 		BookNumericality::$validates_numericality_of[0]['greater_than'] = 0;
 
-		$this->assert_invalid(array(-1,'-1'));
+		$this->assert_invalid(array(-1, '-1'));
 	}
 
 	public function test_greater_than()
@@ -124,7 +123,7 @@ class ValidatesNumericalityOfTest extends DatabaseTest
 		BookNumericality::$validates_numericality_of[0]['greater_than_or_equal_to'] = 5;
 
 		$this->assert_valid(array(5, 5.1, '5.1'));
-		$this->assert_invalid(array(-50, 4.9, '4.9','-5.1'));
+		$this->assert_invalid(array(-50, 4.9, '4.9', '-5.1'));
 	}
 
 	public function test_less_than()
@@ -148,7 +147,7 @@ class ValidatesNumericalityOfTest extends DatabaseTest
 		BookNumericality::$validates_numericality_of[0] = array('numeric_test', 'greater_than' => 1, 'less_than' => 4, 'even' => true);
 
 		$this->assert_valid(array(2));
-		$this->assert_invalid(array(1,3,4));
+		$this->assert_invalid(array(1, 3, 4));
 	}
 
 	public function test_custom_message()
@@ -158,10 +157,9 @@ class ValidatesNumericalityOfTest extends DatabaseTest
 		);
 		$book = new BookNumericality(array('numeric_test' => 'NaN'));
 		$book->is_valid();
-		$this->assertEquals(array('Numeric test Hello'),$book->errors->full_messages());
+		$this->assertEquals(array('Numeric test Hello'), $book->errors->full_messages());
 	}
 }
 
 array_merge(ValidatesNumericalityOfTest::$INTEGERS, ValidatesNumericalityOfTest::$INTEGER_STRINGS);
 array_merge(ValidatesNumericalityOfTest::$FLOATS, ValidatesNumericalityOfTest::$FLOAT_STRINGS);
-

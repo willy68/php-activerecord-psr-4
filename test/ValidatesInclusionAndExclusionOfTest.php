@@ -1,8 +1,10 @@
 <?php
 
+namespace Test;
+
 use Test\helpers\DatabaseTest;
 
-class BookExclusion extends ActiveRecord\Model
+class BookExclusion extends \ActiveRecord\Model
 {
 	static $table = 'books';
 	public static $validates_exclusion_of = array(
@@ -10,7 +12,7 @@ class BookExclusion extends ActiveRecord\Model
 	);
 };
 
-class BookInclusion extends ActiveRecord\Model
+class BookInclusion extends \ActiveRecord\Model
 {
 	static $table = 'books';
 	public static $validates_inclusion_of = array(
@@ -20,7 +22,7 @@ class BookInclusion extends ActiveRecord\Model
 
 class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 {
-	public function set_up($connection_name=null)
+	public function set_up($connection_name = null)
 	{
 		parent::set_up($connection_name);
 		BookInclusion::$validates_inclusion_of[0] = array('name', 'in' => array('blah', 'tanker', 'shark'));
@@ -69,7 +71,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 
 	public function test_inclusion_with_numeric()
 	{
-		BookInclusion::$validates_inclusion_of[0]['in']= array(0, 1, 2);
+		BookInclusion::$validates_inclusion_of[0]['in'] = array(0, 1, 2);
 		$book = new BookInclusion;
 		$book->name = 2;
 		$book->save();
@@ -78,7 +80,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 
 	public function test_inclusion_with_boolean()
 	{
-		BookInclusion::$validates_inclusion_of[0]['in']= array(true);
+		BookInclusion::$validates_inclusion_of[0]['in'] = array(true);
 		$book = new BookInclusion;
 		$book->name = true;
 		$book->save();
@@ -87,7 +89,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 
 	public function test_inclusion_with_null()
 	{
-		BookInclusion::$validates_inclusion_of[0]['in']= array(null);
+		BookInclusion::$validates_inclusion_of[0]['in'] = array(null);
 		$book = new BookInclusion;
 		$book->name = null;
 		$book->save();
@@ -96,7 +98,7 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 
 	public function test_invalid_inclusion_with_numeric()
 	{
-		BookInclusion::$validates_inclusion_of[0]['in']= array(0, 1, 2);
+		BookInclusion::$validates_inclusion_of[0]['in'] = array(0, 1, 2);
 		$book = new BookInclusion;
 		$book->name = 5;
 		$book->save();
@@ -154,5 +156,4 @@ class ValidatesInclusionAndExclusionOfTest extends DatabaseTest
 		$book->save();
 		$this->assertEquals('is using a custom message.', $book->errors->on('name'));
 	}
-
 }

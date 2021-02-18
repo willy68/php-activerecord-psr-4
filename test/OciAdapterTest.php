@@ -47,4 +47,3 @@ class OciAdapterTest extends AdapterTest
 		$this->assertEquals(';charset=utf8', $conn->dsn_params);
 	}
 }
-?>

@@ -1,7 +1,6 @@
 <?php
 namespace Test;
 
-use ActiveRecord\Config;
 use Test\helpers\DatabaseTest;
 use ActiveRecord\ConnectionManager;
 

@@ -1,9 +1,11 @@
 <?php
 
+namespace Test;
+
 use ActiveRecord\Exceptions\ValidationsArgumentError;
 use Test\helpers\DatabaseTest;
 
-class BookFormat extends ActiveRecord\Model
+class BookFormat extends \ActiveRecord\Model
 {
 	static $table = 'books';
 	static $validates_format_of = array(
@@ -13,7 +15,7 @@ class BookFormat extends ActiveRecord\Model
 
 class ValidatesFormatOfTest extends DatabaseTest
 {
-	public function set_up($connection_name=null)
+	public function set_up($connection_name = null)
 	{
 		parent::set_up($connection_name);
 		BookFormat::$validates_format_of[0] = array('name');

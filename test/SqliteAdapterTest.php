@@ -1,11 +1,13 @@
 <?php
 
+namespace Test;
+
 use Test\helpers\AdapterTest;
 use ActiveRecord\Exceptions\DatabaseException;
 
 class SqliteAdapterTest extends AdapterTest
 {
-	public function set_up($connection_name=null)
+	public function set_up($connection_name = null)
 	{
 		parent::set_up('sqlite');
 	}
@@ -27,13 +29,10 @@ class SqliteAdapterTest extends AdapterTest
 
 	public function testConnectToInvalidDatabaseShouldNotCreateDbFile()
 	{
-		try
-		{
-			ActiveRecord\Connection::instance("sqlite://" . self::InvalidDb);
+		try {
+			\ActiveRecord\Connection::instance("sqlite://" . self::InvalidDb);
 			$this->assertFalse(true);
-		}
-		catch (DatabaseException $e)
-		{
+		} catch (DatabaseException $e) {
 			$this->assertFalse(file_exists(__DIR__ . "/" . self::InvalidDb));
 		}
 	}
@@ -42,7 +41,9 @@ class SqliteAdapterTest extends AdapterTest
 	{
 		$ret = array();
 		$sql = 'SELECT * FROM authors ORDER BY name ASC';
-		$this->conn->query_and_fetch($this->conn->limit($sql,null,1),function($row) use (&$ret) { $ret[] = $row; });
+		$this->conn->query_and_fetch($this->conn->limit($sql, null, 1), function ($row) use (&$ret) {
+			$ret[] = $row;
+		});
 
 		$this->assertTrue(strpos($this->conn->last_query, 'LIMIT 1') !== false);
 	}
@@ -69,19 +70,24 @@ class SqliteAdapterTest extends AdapterTest
 	public function test_datetime_to_string()
 	{
 		$datetime = '2009-01-01 01:01:01';
-		$this->assertEquals($datetime,$this->conn->datetime_to_string(date_create($datetime)));
+		$this->assertEquals($datetime, $this->conn->datetime_to_string(date_create($datetime)));
 	}
 
 	public function test_date_to_string()
 	{
 		$datetime = '2009-01-01';
-		$this->assertEquals($datetime,$this->conn->date_to_string(date_create($datetime)));
+		$this->assertEquals($datetime, $this->conn->date_to_string(date_create($datetime)));
 	}
 
 	// not supported
-	public function test_connect_with_port() {return true;}
+	public function test_connect_with_port()
+	{
+		return true;
+	}
 
 	// not supported
-	public function test_columns_sequence(){return true;}
+	public function test_columns_sequence()
+	{
+		return true;
+	}
 }
-?>
