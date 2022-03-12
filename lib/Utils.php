@@ -11,20 +11,21 @@ class Utils
 {
     public static function extract_options($options)
     {
-        return is_array(end($options)) ? end($options) : array();
+        return is_array(end($options)) ? end($options) : [];
     }
 
     public static function add_condition($condition, &$conditions = array(), $conjuction = 'AND')
     {
         if (is_array($condition)) {
-            if (empty($conditions))
+            if (empty($conditions)) {
                 $conditions = array_flatten($condition);
-            else {
+            } else {
                 $conditions[0] .= " $conjuction " . array_shift($condition);
                 $conditions[] = array_flatten($condition);
             }
-        } elseif (is_string($condition))
+        } elseif (is_string($condition)) {
             $conditions[0] .= " $conjuction $condition";
+        }
 
         return $conditions;
     }
@@ -47,8 +48,9 @@ class Utils
     {
         switch ($type) {
             case 'range':
-                if (is_array($var) && (int)$var[0] < (int)$var[1])
+                if (is_array($var) && (int)$var[0] < (int)$var[1]) {
                     return true;
+                }
         }
 
         return false;
@@ -139,21 +141,24 @@ class Utils
     public static function pluralize($string)
     {
         // save some time in the case that singular and plural are the same
-        if (in_array(strtolower($string), self::$uncountable))
+        if (in_array(strtolower($string), self::$uncountable)) {
             return $string;
+        }
 
         // check for irregular singular forms
         foreach (self::$irregular as $pattern => $result) {
             $pattern = '/' . $pattern . '$/i';
 
-            if (preg_match($pattern, $string))
+            if (preg_match($pattern, $string)) {
                 return preg_replace($pattern, $result, $string);
+            }
         }
 
         // check for matches using regular expressions
         foreach (self::$plural as $pattern => $result) {
-            if (preg_match($pattern, $string))
+            if (preg_match($pattern, $string)) {
                 return preg_replace($pattern, $result, $string);
+            }
         }
 
         return $string;
@@ -162,21 +167,24 @@ class Utils
     public static function singularize($string)
     {
         // save some time in the case that singular and plural are the same
-        if (in_array(strtolower($string), self::$uncountable))
+        if (in_array(strtolower($string), self::$uncountable)) {
             return $string;
+        }
 
         // check for irregular plural forms
         foreach (self::$irregular as $result => $pattern) {
             $pattern = '/' . $pattern . '$/i';
 
-            if (preg_match($pattern, $string))
+            if (preg_match($pattern, $string)) {
                 return preg_replace($pattern, $result, $string);
+            }
         }
 
         // check for matches using regular expressions
         foreach (self::$singular as $pattern => $result) {
-            if (preg_match($pattern, $string))
+            if (preg_match($pattern, $string)) {
                 return preg_replace($pattern, $result, $string);
+            }
         }
 
         return $string;
@@ -184,10 +192,11 @@ class Utils
 
     public static function pluralize_if($count, $string)
     {
-        if ($count == 1)
+        if ($count == 1) {
             return $string;
-        else
+        } else {
             return self::pluralize($string);
+        }
     }
 
     public static function squeeze($char, $string)

@@ -8,7 +8,6 @@
 
 namespace ActiveRecord\Serializers;
 
-
 class JsonSerializer extends ArraySerializer
 {
     public static $include_root = false;

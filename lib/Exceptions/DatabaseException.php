@@ -27,7 +27,8 @@ class DatabaseException extends ActiveRecordException
                 join(", ", $adapter_or_string_or_mystery->errorInfo()),
                 intval($adapter_or_string_or_mystery->errorCode())
             );
-        } else
+        } else {
             parent::__construct($adapter_or_string_or_mystery);
+        }
     }
 }

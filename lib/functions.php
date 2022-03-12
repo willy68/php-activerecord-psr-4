@@ -36,12 +36,13 @@
 
 namespace ActiveRecord;
 
-use \Closure;
+use Closure;
 
 function classify($class_name, $singularize = false)
 {
-    if ($singularize)
+    if ($singularize) {
         $class_name = Utils::singularize($class_name);
+    }
 
     $class_name = Inflector::instance()->camelize($class_name);
     return ucfirst($class_name);
@@ -53,10 +54,11 @@ function array_flatten(array $array)
     $i = 0;
 
     while ($i < count($array)) {
-        if (is_array($array[$i]))
+        if (is_array($array[$i])) {
             array_splice($array, $i, 1, $array[$i]);
-        else
+        } else {
             ++$i;
+        }
     }
     return $array;
 }
@@ -66,8 +68,9 @@ function array_flatten(array $array)
  */
 function is_hash(&$array)
 {
-    if (!is_array($array))
+    if (!is_array($array)) {
         return false;
+    }
 
     $keys = array_keys($array);
     return @is_string($keys[0]) ? true : false;
@@ -82,8 +85,9 @@ function is_hash(&$array)
  */
 function denamespace($class_name)
 {
-    if (is_object($class_name))
+    if (is_object($class_name)) {
         $class_name = get_class($class_name);
+    }
 
     if (has_namespace($class_name)) {
         $parts = explode('\\', $class_name);
@@ -94,22 +98,25 @@ function denamespace($class_name)
 
 function get_namespaces($class_name)
 {
-    if (has_namespace($class_name))
+    if (has_namespace($class_name)) {
         return explode('\\', $class_name);
+    }
     return null;
 }
 
 function has_namespace($class_name)
 {
-    if (strpos($class_name, '\\') !== false)
+    if (strpos($class_name, '\\') !== false) {
         return true;
+    }
     return false;
 }
 
 function has_absolute_namespace($class_name)
 {
-    if (strpos($class_name, '\\') === 0)
+    if (strpos($class_name, '\\') === 0) {
         return true;
+    }
     return false;
 }
 
@@ -122,8 +129,9 @@ function has_absolute_namespace($class_name)
 function all($needle, array $haystack)
 {
     foreach ($haystack as $value) {
-        if ($value !== $needle)
+        if ($value !== $needle) {
             return false;
+        }
     }
     return true;
 }
@@ -133,10 +141,11 @@ function collect(&$enumerable, $name_or_closure)
     $ret = array();
 
     foreach ($enumerable as $value) {
-        if (is_string($name_or_closure))
+        if (is_string($name_or_closure)) {
             $ret[] = is_array($value) ? $value[$name_or_closure] : $value->$name_or_closure;
-        elseif ($name_or_closure instanceof Closure)
+        } elseif ($name_or_closure instanceof Closure) {
             $ret[] = $name_or_closure($value);
+        }
     }
     return $ret;
 }
@@ -146,12 +155,13 @@ function collect(&$enumerable, $name_or_closure)
  */
 function wrap_strings_in_arrays(&$strings)
 {
-    if (!is_array($strings))
+    if (!is_array($strings)) {
         $strings = array(array($strings));
-    else {
+    } else {
         foreach ($strings as &$str) {
-            if (!is_array($str))
+            if (!is_array($str)) {
                 $str = array($str);
+            }
         }
     }
     return $strings;

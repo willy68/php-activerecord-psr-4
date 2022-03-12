@@ -10,7 +10,8 @@ namespace ActiveRecord\Serializers;
 
 use XmlWriter;
 use ActiveRecord\Model;
-use function \ActiveRecord\denamespace;
+
+use function ActiveRecord\denamespace;
 
 class XmlSerializer extends Serialization
 {
@@ -38,8 +39,9 @@ class XmlSerializer extends Serialization
         $this->writer->endDocument();
         $xml = $this->writer->outputMemory(true);
 
-        if (@$this->options['skip_instruct'] == true)
+        if (@$this->options['skip_instruct'] == true) {
             $xml = preg_replace('/<\?xml version.*?\?>/', '', $xml);
+        }
 
         return $xml;
     }
@@ -47,16 +49,18 @@ class XmlSerializer extends Serialization
     private function write($data, $tag = null)
     {
         foreach ($data as $attr => $value) {
-            if ($tag != null)
+            if ($tag != null) {
                 $attr = $tag;
+            }
 
             if (is_array($value) || is_object($value)) {
                 if (!is_int(key($value))) {
                     $this->writer->startElement($attr);
                     $this->write($value);
                     $this->writer->endElement();
-                } else
+                } else {
                     $this->write($value, $attr);
+                }
 
                 continue;
             }

@@ -15,7 +15,9 @@ class CsvSerializer extends Serialization
 
     public function to_s()
     {
-        if (@$this->options['only_header'] == true) return $this->header();
+        if (@$this->options['only_header'] == true) {
+            return $this->header();
+        }
         return $this->row();
     }
 

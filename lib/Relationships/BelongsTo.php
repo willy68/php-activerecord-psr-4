@@ -37,46 +37,50 @@ use ActiveRecord\Model;
  */
 class BelongsTo extends AbstractRelationship
 {
-	public function __construct($options = array())
-	{
-		parent::__construct($options);
+    public function __construct($options = array())
+    {
+        parent::__construct($options);
 
-		if (!$this->class_name)
-			$this->set_inferred_class_name();
+        if (!$this->class_name) {
+            $this->set_inferred_class_name();
+        }
 
-		//infer from class_name
-		if (!$this->foreign_key)
-			$this->foreign_key = array(Inflector::instance()->keyify($this->class_name));
-	}
+        //infer from class_name
+        if (!$this->foreign_key) {
+            $this->foreign_key = array(Inflector::instance()->keyify($this->class_name));
+        }
+    }
 
-	public function __get($name)
-	{
-		if ($name === 'primary_key' && !isset($this->primary_key)) {
-			$this->primary_key = array(Table::load($this->class_name)->pk[0]);
-		}
+    public function __get($name)
+    {
+        if ($name === 'primary_key' && !isset($this->primary_key)) {
+            $this->primary_key = array(Table::load($this->class_name)->pk[0]);
+        }
 
-		return $this->$name;
-	}
+        return $this->$name;
+    }
 
-	public function load(Model $model)
-	{
-		$keys = array();
-		$inflector = Inflector::instance();
+    public function load(Model $model)
+    {
+        $keys = array();
+        $inflector = Inflector::instance();
 
-		foreach ($this->foreign_key as $key)
-			$keys[] = $inflector->variablize($key);
+        foreach ($this->foreign_key as $key) {
+            $keys[] = $inflector->variablize($key);
+        }
 
-		if (!($conditions = $this->create_conditions_from_keys($model, $this->primary_key, $keys)))
-			return null;
+        if (!($conditions = $this->create_conditions_from_keys($model, $this->primary_key, $keys))) {
+            return null;
+        }
 
-		$options = $this->unset_non_finder_options($this->options);
-		$options['conditions'] = $conditions;
-		$class = $this->class_name;
-		return $class::first($options);
-	}
+        $options = $this->unset_non_finder_options($this->options);
+        $options['conditions'] = $conditions;
+        $class = $this->class_name;
+        return $class::first($options);
+    }
 
-	public function load_eagerly(Table $table, $includes, $attributes, $models = array())
-	{
-		$this->query_and_attach_related_models_eagerly($table, $models, $attributes, $includes, $this->primary_key, $this->foreign_key);
-	}
+    public function load_eagerly(Table $table, $includes, $attributes, $models = array())
+    {
+        $this->query_and_attach_related_models_eagerly($table, $models, $attributes, $includes, $this->primary_key, $this->foreign_key);
+    }
 }
