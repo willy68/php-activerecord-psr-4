@@ -1893,7 +1893,7 @@ class Model
      */
     private function serialize($type, $options)
     {
-        $class = "ActiveRecord\\{$type}Serializer";
+        $class = "ActiveRecord\\Serializers\\{$type}Serializer";
         $serializer = new $class($this, $options);
         return $serializer->to_s();
     }
