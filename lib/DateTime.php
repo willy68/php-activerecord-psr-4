@@ -6,9 +6,7 @@
 
 namespace ActiveRecord;
 
-use DateInterval;
 use DateTimeZone;
-use DateTime as GlobalDateTime;
 
 /**
  * An extension of PHP's DateTime class to provide dirty flagging and easier formatting options.
@@ -91,7 +89,8 @@ class DateTime extends \DateTime implements DateTimeInterface
      * @param string $format A format string accepted by get_format()
      * @return string formatted date and time string
      */
-    public function format(string $format = null): string
+    #[\ReturnTypeWillChange]
+    public function format($format)
     {
         return parent::format(self::get_format($format));
     }
@@ -126,7 +125,8 @@ class DateTime extends \DateTime implements DateTimeInterface
      * This needs to be overriden so it returns an instance of this class instead of PHP's \DateTime.
      * See http://php.net/manual/en/datetime.createfromformat.php
      */
-    public static function createFromFormat(string $format, string $time, DateTimeZone|null $tz = null): GlobalDateTime|false
+    #[\ReturnTypeWillChange]
+    public static function createFromFormat($format, $time, DateTimeZone $tz = null)
     {
         $phpDate = $tz ? parent::createFromFormat($format, $time, $tz) : parent::createFromFormat($format, $time);
         if (!$phpDate) {
@@ -165,49 +165,57 @@ class DateTime extends \DateTime implements DateTimeInterface
         }
     }
 
-    public function setDate(int $year, int $month, int $day): GlobalDateTime
+    #[\ReturnTypeWillChange]
+    public function setDate($year, $month, $day)
     {
         $this->flag_dirty();
         return parent::setDate($year, $month, $day);
     }
 
-    public function setISODate(int $year, int $week, int $dayOfWeek = 1): GlobalDateTime
+    #[\ReturnTypeWillChange]
+    public function setISODate($year, $week, $dayOfWeek = 1)
     {
         $this->flag_dirty();
         return parent::setISODate($year, $week, $dayOfWeek);
     }
 
-    public function setTime(int $hour, int $minute, int $second = 0, int $microsecond = 0): GlobalDateTime
+    #[\ReturnTypeWillChange]
+    public function setTime($hour, $minute, $second = 0, $microsecond = 0)
     {
         $this->flag_dirty();
         return parent::setTime($hour, $minute, $second);
     }
 
-    public function setTimestamp(int $timestamp): GlobalDateTime
+    #[\ReturnTypeWillChange]
+    public function setTimestamp($timestamp)
     {
         $this->flag_dirty();
         return parent::setTimestamp($timestamp);
     }
 
-    public function setTimezone(DateTimeZone $timezone): GlobalDateTime
+    #[\ReturnTypeWillChange]
+    public function setTimezone($timezone)
     {
         $this->flag_dirty();
         return parent::setTimezone($timezone);
     }
 
-    public function modify(string $modifier): GlobalDateTime|false
+    #[\ReturnTypeWillChange]
+    public function modify($modifier)
     {
         $this->flag_dirty();
         return parent::modify($modifier);
     }
 
-    public function add(DateInterval $interval): GlobalDateTime
+    #[\ReturnTypeWillChange]
+    public function add($interval)
     {
         $this->flag_dirty();
         return parent::add($interval);
     }
 
-    public function sub(DateInterval $interval): GlobalDateTime
+    #[\ReturnTypeWillChange]
+    public function sub($interval)
     {
         $this->flag_dirty();
         return parent::sub($interval);

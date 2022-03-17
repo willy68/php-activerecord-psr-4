@@ -7,7 +7,6 @@
 namespace ActiveRecord;
 
 use DateTimeZone;
-use DateTime as GlobalDateTime;
 
 /**
  * Interface for the ActiveRecord\DateTime class so that ActiveRecord\Model->assign_attribute() will
@@ -36,5 +35,5 @@ interface DateTimeInterface
     /**
      * See http://php.net/manual/en/datetime.createfromformat.php
      */
-    public static function createFromFormat(string $format, string $time, DateTimeZone|null $tz = null): GlobalDateTime|false;
+    public static function createFromFormat($format, $time, DateTimeZone $tz = null);
 }
