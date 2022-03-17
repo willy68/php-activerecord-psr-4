@@ -30,7 +30,7 @@ interface DateTimeInterface
     /**
      * Formats the DateTime to the specified format.
      */
-    public function format(string $format = null): string;
+    public function format($format);
 
     /**
      * See http://php.net/manual/en/datetime.createfromformat.php
